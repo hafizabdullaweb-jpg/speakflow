@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakFlow - Master Communication with AI & Real Practice Partners</title>
+    <meta name="description" content="Transform your speaking skills with AI coaching and real conversation partners. Join the waitlist for the future of communication training.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #e5e7eb;
+            background: #0a0e1a;
+            overflow-x: hidden;
+        }
+
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 1000;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)"/%3E%3C/svg%3E');
+        }
+
+        .hero {
+            background: linear-gradient(180deg, #0a0e1a 0%, #0f1729 100%);
+            color: white;
+            padding: 120px 20px 140px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .glow-orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        .orb-1 {
+            background: linear-gradient(45deg, #00e5ff, #00b8d4);
+            top: -200px;
+            right: -200px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            background: linear-gradient(45deg, #00ffff, #0091ea);
+            bottom: -200px;
+            left: -200px;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        .orb-3 {
+            background: linear-gradient(45deg, #18ffff, #00acc1);
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            animation: float 30s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(50px, 50px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            border-radius: 50px;
+            color: #00e5ff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 0%, #00e5ff 50%, #00b8d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            text-shadow: 0 0 40px rgba(0, 229, 255, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 50px;
+            color: #94a3b8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+        }
+
+        .waitlist-form {
+            background: rgba(15, 23, 41, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 45px;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 229, 255, 0.1);
+            max-width: 520px;
+            margin: 0 auto;
+            transform: translateY(60px);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            letter-spacing: 0.02em;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 16px 18px;
+            background: rgba(15, 23, 41, 0.9);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: #e5e7eb;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        input::placeholder {
+            color: #64748b;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #00e5ff;
+            background: rgba(15, 23, 41, 1);
+            box-shadow: 0 0 0 4px rgba(0, 229, 255, 0.1), 0 0 20px rgba(0, 229, 255, 0.2);
+        }
+
+        select {
+            cursor: pointer;
+            color: #94a3b8;
+        }
+
+        select option {
+            background: #1e293b;
+            color: #e5e7eb;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #00e5ff 0%, #00b8d4 100%);
+            color: #0a0e1a;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(0, 229, 255, 0.5), 0 0 60px rgba(0, 229, 255, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #00e5ff 0%, #00b8d4 100%);
+            color: #0a0e1a;
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.4), 0 0 40px rgba(0, 229, 255, 0.2);
+        }
+
+        .features {
+            padding: 140px 20px 100px;
+            background: #0a0e1a;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #00e5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, rgba(15, 23, 41, 0.6), rgba(10, 14, 26, 0.6));
+            backdrop-filter: blur(10px);
+            padding: 40px 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.6), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 229, 255, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 229, 255, 0.2), 0 0 40px rgba(0, 229, 255, 0.1);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 24px;
+            display: inline-block;
+            filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.4));
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #f3f4f6;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: #94a3b8;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .social-proof {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, #0a0e1a 0%, #0f1729 100%);
+            border-top: 1px solid rgba(0, 229, 255, 0.15);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 60px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00e5ff 0%, #18ffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            line-height: 1;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.3));
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .problem-solution {
+            padding: 100px 20px;
+            background: #0a0e1a;
+            position: relative;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            margin-top: 60px;
+        }
+
+        .comparison-box {
+            background: linear-gradient(145deg, rgba(15, 23, 41, 0.5), rgba(10, 14, 26, 0.5));
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            position: relative;
+        }
+
+        .comparison-box.problem {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .comparison-box.solution {
+            border-color: rgba(0, 229, 255, 0.4);
+            background: linear-gradient(145deg, rgba(15, 35, 41, 0.5), rgba(10, 25, 30, 0.5));
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.1);
+        }
+
+        .comparison-box h3 {
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: #f3f4f6;
+        }
+
+        .comparison-box ul {
+            list-style: none;
+        }
+
+        .comparison-box li {
+            padding: 14px 0;
+            padding-left: 35px;
+            position: relative;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .comparison-box li::before {
+            content: '✕';
+            position: absolute;
+            left: 0;
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .comparison-box.solution li::before {
+            content: '✓';
+            color: #00e5ff;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+
+        .cta-section {
+            padding: 120px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, #0a0e1a 0%, #0f1729 100%);
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.6), transparent);
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #00e5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 60px;
+            background: linear-gradient(135deg, #00e5ff 0%, #00b8d4 100%);
+            color: #0a0e1a;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.4), 0 0 40px rgba(0, 229, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-btn:hover::before {
+            left: 100%;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(0, 229, 255, 0.5), 0 0 60px rgba(0, 229, 255, 0.3);
+        }
+
+        footer {
+            background: #0a0e1a;
+            color: #64748b;
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(0, 229, 255, 0.1);
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .waitlist-form {
+                padding: 35px 25px;
+                transform: translateY(40px);
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .stats-container {
+                gap: 40px;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0e1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00e5ff, #00b8d4);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #18ffff, #00acc1);
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    
+    <section class="hero">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+        
+        <div class="container">
+            <div class="badge">🚀 Early Access Opening Soon</div>
+            <h1>Master Communication.<br>Speak with Confidence.</h1>
+            <p class="subtitle">Practice with AI coaching + real conversation partners. Transform from hesitant to confident speaker in weeks, not years.</p>
+            
+            <div class="waitlist-form">
+                <form id="waitlistForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required placeholder="John Doe">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required placeholder="john@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="goal">Primary Goal</label>
+                        <select id="goal" name="goal" required>
+                            <option value="">Select your goal...</option>
+                            <option value="public-speaking">Public Speaking</option>
+                            <option value="leadership">Leadership Communication</option>
+                            <option value="interviews">Job Interviews</option>
+                            <option value="english-fluency">English Fluency</option>
+                            <option value="sales">Sales & Persuasion</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Join the Waitlist</button>
+                    
+                    <div class="success-message" id="successMessage">
+                        🎉 Success! You're on the list. Check your email for next steps.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="social-proof">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Early Sign-ups</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">12</span>
+                    <span class="stat-label">Countries</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">85%</span>
+                    <span class="stat-label">Want This Now</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="problem-solution">
+        <div class="container">
+            <h2 class="section-title">Why Traditional Methods Fail</h2>
+            <p class="section-subtitle">Most people struggle with speaking skills not because they lack knowledge, but because they lack consistent, quality practice.</p>
+            
+            <div class="comparison">
+                <div class="comparison-box problem">
+                    <h3>❌ Without SpeakFlow</h3>
+                    <ul>
+                        <li>Practice alone, no feedback</li>
+                        <li>Expensive coaches ($100+/hr)</li>
+                        <li>No accountability partner</li>
+                        <li>Inconsistent practice</li>
+                        <li>Nervous in real situations</li>
+                        <li>Slow, frustrating progress</li>
+                    </ul>
+                </div>
+                <div class="comparison-box solution">
+                    <h3>✅ With SpeakFlow</h3>
+                    <ul>
+                        <li>AI coach + real partners</li>
+                        <li>Affordable ($15-25/month)</li>
+                        <li>Built-in accountability</li>
+                        <li>Daily practice reminders</li>
+                        <li>Real conversation experience</li>
+                        <li>Track improvement weekly</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">How SpeakFlow Works</h2>
+            <p class="section-subtitle">A complete ecosystem designed to transform your communication skills through AI intelligence and human connection.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Speech Coach</h3>
+                    <p>Get instant feedback on pace, clarity, filler words, and confidence. Practice anytime, as much as you want.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Real Practice Partners</h3>
+                    <p>Match with people worldwide who share your goals. Practice real conversations, not just scripts.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Track Your Progress</h3>
+                    <p>See your improvement with detailed analytics. Record sessions, review transcripts, celebrate wins.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Structured Learning</h3>
+                    <p>Follow proven methodologies from top communication experts. No more guessing what to practice.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Daily Accountability</h3>
+                    <p>Build consistency with streaks, reminders, and community support. Never lose momentum again.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Real Results</h3>
+                    <p>From job interviews to presentations to leadership roles. Transform your career through communication.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Speak with Confidence?</h2>
+            <p>Join 500+ people waiting for early access. Be the first to know when we launch.</p>
+            <a href="#" class="cta-btn" onclick="document.getElementById('waitlistForm').scrollIntoView({behavior: 'smooth'}); return false;">Secure Your Spot</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 SpeakFlow. All rights reserved.</p>
+            <p style="margin-top: 10px; opacity: 0.7;">Empowering confident communicators worldwide.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('.submit-btn');
+            const successMessage = document.getElementById('successMessage');
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                goal: document.getElementById('goal').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Joining...';
+            
+            try {
+                // Send to Google Sheets
+                const response = await fetch('https://script.google.com/macros/s/AKfycbx0In70FAo-LycMI6JmOlTCAcCjDpLe6QPbTqF8wVbeLZH5MMaMm8JAnS1SNsX0ZQuyCQ/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                // Show success message
+                setTimeout(() => {
+                    this.style.display = 'none';
+                    successMessage.style.display = 'block';
+                }, 1000);
+                
+                // Log for debugging
+                console.log('Signup successful:', formData);
+                
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Try Again';
+                alert('Something went wrong. Please try again!');
+            }
+        });
+
+        document.documentElement.style.scrollBehavior = 'smooth';
+    </script>
+</body>
+</html>
